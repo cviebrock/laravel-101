@@ -24,3 +24,9 @@ Route::controller('users', 'UsersController');
 
 
 Route::resource('posts', 'PostsController');
+
+
+Route::get('test', function()
+{
+  return View::make('test');
+});
