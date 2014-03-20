@@ -13,7 +13,7 @@
 
 Route::get('/', function()
 {
-  return 'Hello World!';
+	return 'Hello World!';
 });
 
 
@@ -28,5 +28,19 @@ Route::resource('posts', 'PostsController');
 
 Route::get('test', function()
 {
-  return View::make('test');
+	return View::make('test');
+});
+
+
+Route::get('make-post', function()
+{
+	$post = Post::create(
+		array(
+			'title'  => 'My First Post',
+			'text'   => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
+			'active' => true,
+		)
+	);
+
+	echo $post;
 });

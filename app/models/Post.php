@@ -1,0 +1,15 @@
+<?php
+
+class Post extends Eloquent {
+
+	/**
+	 * This isn't mentioned in the slides, but newer versions of Laravel
+	 * protect themselves from mass assignment (i.e. the ::create() method).
+	 * You need to blacklist which fields you are not able to mass assign.
+	 *
+	 * @see  http://laravel.com/docs/eloquent#mass-assignment
+	 */
+
+	protected $guarded = array('id');
+
+}
