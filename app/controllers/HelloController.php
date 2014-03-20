@@ -4,7 +4,7 @@ class HelloController extends BaseController {
 
   public function showWelcome($name='stranger')
   {
-    return 'Hello, '. e($name) . '!';
+    return View::make('hello', compact('name') );
   }
 
 }
