@@ -21,3 +21,6 @@ Route::get('hello/{name?}', 'HelloController@showWelcome');
 
 
 Route::controller('users', 'UsersController');
+
+
+Route::resource('posts', 'PostsController');
