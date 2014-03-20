@@ -48,3 +48,6 @@ Route::get('make-post', function()
 	<p>$post->text</p>
 EOB;
 });
+
+
+Route::resource('books', 'BookController');
