@@ -36,11 +36,15 @@ Route::get('make-post', function()
 {
 	$post = Post::create(
 		array(
-			'title'  => 'My First Post',
-			'text'   => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit',
+			'title'  => 'my first post',
+			'text'   => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
 			'active' => true,
 		)
 	);
 
-	echo $post;
+	return <<< EOB
+	<h1>$post->title</h1>
+	<p>$post->excerpt</p>
+	<p>$post->text</p>
+EOB;
 });

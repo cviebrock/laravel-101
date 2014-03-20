@@ -16,6 +16,7 @@ class CreatePostsTable extends Migration {
 			$table->increments('id');
 			$table->string('title', 50);
 			$table->text('text')->nullable();
+			$table->string('excerpt',100)->nullable();
 			$table->boolean('active')->default(true);
 			$table->timestamps();
 		});

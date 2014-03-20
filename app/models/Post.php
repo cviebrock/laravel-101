@@ -12,4 +12,21 @@ class Post extends Eloquent {
 
 	protected $guarded = array('id');
 
+
+	public function getTitleAttribute($value)
+	{
+		return ucwords($value);
+	}
+
+
+	public function setTextAttribute($value)
+	{
+		$value = trim($value);
+		$this->attributes['text'] = $value;
+
+		// not limited to modifying the one attribute
+		$this->attributes['excerpt'] = substr($value,0,97) . '...';
+
+	}
+
 }
