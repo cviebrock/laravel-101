@@ -15,3 +15,9 @@ Route::get('/', function()
 {
   return 'Hello World!';
 });
+
+
+Route::get('hello/{name?}', function($name='stranger')
+{
+  return 'Hello ' . e($name) . '!';
+})->where('name','[A-za-z]+');
