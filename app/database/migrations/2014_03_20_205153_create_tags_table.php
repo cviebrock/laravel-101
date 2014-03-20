@@ -1,9 +1,9 @@
-./arti	<?php
+<?php
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostsTable extends Migration {
+class CreateTagsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,9 @@ class CreatePostsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('posts', function(Blueprint $table) {
+		Schema::create('tags', function(Blueprint $table) {
 			$table->increments('id');
-			$table->string('title', 50);
-			$table->text('text')->nullable();
-			$table->string('excerpt',100)->nullable();
-			$table->boolean('active')->default(true);
+			$table->string('name');
 			$table->timestamps();
 		});
 	}
@@ -29,7 +26,7 @@ class CreatePostsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('posts');
+		Schema::drop('tags');
 	}
 
 }
