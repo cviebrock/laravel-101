@@ -10,6 +10,8 @@
 		label { display: block; }
 		ul.errors { background-color: #c66; color: #fff; padding: 1em 1em 1em 2em; }
 		.alert { background-color: #cfc; color: #060; padding: 1em; text-align: center; }
+		.log { background-color: #eee; padding: 1em; }
+		code { display: block; margin-top: 0.5em; white-space: normal; }
 	</style>
 	<body>
 
@@ -26,5 +28,12 @@
 		<div class="container">
 			@yield('content', 'Default content')
 		</div>
+
+<pre class="log">
+@foreach( DB::getQueryLog() as $query )
+<code>{{{ $query['query'] }}}</code>
+@endforeach
+</pre>
+
 	</body>
 </html>

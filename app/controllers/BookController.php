@@ -9,7 +9,12 @@ class BookController extends \BaseController {
 	 */
 	public function index()
 	{
-		$books = Book::orderBy('title')->get();
+		$books = Cache::remember('all-books', 10, function()
+		{
+			return Book::with('author')
+				->orderBy('title')
+				->get();
+		});
 
 		return View::make('books.index', compact('books'));
 	}
@@ -55,6 +60,7 @@ class BookController extends \BaseController {
 		}
 
 		$book = Book::create( $data );
+		Cache::forget('all-books');
 
 		return Redirect::route('books.index')
 			->with('alert', 'Book created!');
@@ -69,7 +75,7 @@ class BookController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$book = Book::findOrFail($id);
+		$book = Book::with('author','tags')->findOrFail($id);
 
 		return View::make('books.show', compact('book'));
 	}
@@ -118,6 +124,7 @@ class BookController extends \BaseController {
 
 		$book->update( $data );
 		$book->save();
+		Cache::forget('all-books');
 
 		return Redirect::route('books.index')
 			->with('alert', 'Book edited!');
@@ -133,6 +140,7 @@ class BookController extends \BaseController {
 	{
 		$book = Book::findOrFail($id);
 		$book->delete();
+		Cache::forget('all-books');
 
 		return Redirect::route('books.index')
 			->with('alert', 'Book deleted!');
