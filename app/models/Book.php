@@ -14,4 +14,12 @@ class Book extends Eloquent {
 		return $this->belongsToMany('Tag');
 	}
 
+
+	public function getTaglistAttribute()
+	{
+		$tags = $this->tags->lists('name');
+
+		return join(', ', $tags);
+	}
+
 }

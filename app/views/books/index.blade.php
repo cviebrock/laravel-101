@@ -8,7 +8,7 @@
 <ul>
 @foreach($books as $book)
 	<li>
-		{{{ $book->title }}},
+		{{ link_to_route('books.show', $book->title, $book->id) }}
 		by {{{ $book->author->name }}}
 	</li>
 @endforeach

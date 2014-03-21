@@ -10,6 +10,7 @@ class BookController extends \BaseController {
 	public function index()
 	{
 		$books = Book::orderBy('title')->get();
+
 		return View::make('books.index', compact('books'));
 	}
 
@@ -20,7 +21,13 @@ class BookController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+
+		// the lists() method on the collection will create an array suitable for
+		// use in <select> tags: an array of all the author's names, indexed by
+		// their "id" values.
+		$authors = Author::all()->lists('name','id');
+
+		return View::make('books.create', compact('authors'));
 	}
 
 	/**
@@ -30,7 +37,28 @@ class BookController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$data = Input::all();
+
+		$rules = array(
+			'title'       => 'required|max:50',
+			'description' => 'required',
+			'author_id'   => 'required|exists:authors,id'
+		);
+
+		$validator = Validator::make($data,$rules);
+
+		if ($validator->fails())
+		{
+			return Redirect::back()
+				->withInput()
+				->withErrors($validator);
+		}
+
+		$book = Book::create( $data );
+
+		return Redirect::route('books.index')
+			->with('alert', 'Book created!');
+
 	}
 
 	/**
@@ -41,7 +69,9 @@ class BookController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$book = Book::findOrFail($id);
+
+		return View::make('books.show', compact('book'));
 	}
 
 	/**
@@ -52,7 +82,11 @@ class BookController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$book = Book::findOrFail($id);
+
+		$authors = Author::all()->lists('name','id');
+
+		return View::make('books.edit', compact('book','authors'));
 	}
 
 	/**
@@ -63,7 +97,30 @@ class BookController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$book = Book::findOrFail($id);
+
+		$data = Input::all();
+
+		$rules = array(
+			'title'       => 'required|max:50',
+			'description' => 'required',
+			'author_id'   => 'required|exists:authors,id'
+		);
+
+		$validator = Validator::make($data,$rules);
+
+		if ($validator->fails())
+		{
+			return Redirect::back()
+				->withInput()
+				->withErrors($validator);
+		}
+
+		$book->update( $data );
+		$book->save();
+
+		return Redirect::route('books.index')
+			->with('alert', 'Book edited!');
 	}
 
 	/**
@@ -74,7 +131,11 @@ class BookController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$book = Book::findOrFail($id);
+		$book->delete();
+
+		return Redirect::route('books.index')
+			->with('alert', 'Book deleted!');
 	}
 
 }
